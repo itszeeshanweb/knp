@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Bootstrap </title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <link href="css/bootstrap.min.css" rel="stylesheet" />
+        <link href="css/style.css" rel="stylesheet" />
+        <link href="fonts/poppins-fonts.css" rel="stylesheet" />
+
+    </head>
+    <body>
+
+
+      <div class="wrapper wrapper-2 d-flex align-items-center justify-content-center">
+        <div class="container">
+          <div class="row align-items-center justify-content-center">
+            <div class="col-md-3">
+                
+                <div class="mb-5 text-center">
+                    <h3 class="text-white">Name</h3>
+                </div>
+
+                  <div class="input-group mb-5">
+                    
+                    <span class="input-group-text">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="22" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                      </svg>
+                    </span>
+                    <input type="text"  class="form-control z-input" placeholder="Username">
+                  </div>
+                  <div class="input-group mb-5">
+                    <span class="input-group-text">
+                      <svg width="16" viewBox="0 0 22 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20.1781 6.992H18.3781C18.2541 5.10053 17.4152 3.32704 16.0317 2.03128C14.6482 0.735525 12.8237 0.0145264 10.9281 0.0145264C9.03259 0.0145264 7.208 0.735525 5.82449 2.03128C4.44099 3.32704 3.60215 5.10053 3.47812 6.992H1.67813C1.23218 6.99332 0.804871 7.17105 0.489532 7.48639C0.174194 7.80173 -0.0035638 8.22903 -0.00488281 8.67499V27.444C-0.0035638 27.89 0.174194 28.3173 0.489532 28.6326C0.804871 28.9479 1.23218 29.1257 1.67813 29.127H20.1731C20.6191 29.1257 21.0464 28.9479 21.3617 28.6326C21.6771 28.3173 21.8548 27.89 21.8561 27.444V8.67499C21.8548 8.2299 21.6778 7.80333 21.3635 7.48813C21.0492 7.17293 20.6232 6.99464 20.1781 6.992ZM13.7451 23.392H8.11813L9.15811 17.63C8.6069 17.2516 8.19124 16.7068 7.97192 16.0752C7.75261 15.4436 7.74116 14.7585 7.93924 14.1199C8.13732 13.4813 8.53454 12.9229 9.07278 12.5263C9.61103 12.1298 10.2621 11.9158 10.9306 11.9158C11.5992 11.9158 12.2502 12.1298 12.7885 12.5263C13.3267 12.9229 13.7239 13.4813 13.922 14.1199C14.1201 14.7585 14.1086 15.4436 13.8893 16.0752C13.67 16.7068 13.2543 17.2516 12.7031 17.63L13.7451 23.392ZM5.74512 6.992C5.86304 5.69847 6.46025 4.49574 7.41949 3.61996C8.37874 2.74419 9.63073 2.25864 10.9296 2.25864C12.2285 2.25864 13.4805 2.74419 14.4397 3.61996C15.399 4.49574 15.9962 5.69847 16.1141 6.992H5.74512Z" fill="#ffffff"></path>
+                      </svg>
+                    </span>
+                    <input type="password"  class="form-control z-input" placeholder="Password">
+                  </div>
+           
+  
+  
+  
+                <div class="form-group text-center">
+                  <button type="button" class="btn btn-light text-color-yellow">Login</button>
+                </div>
+       
+
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+    <script src="js/jquery-3.6.4.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js" ></script>
+    <script>
+
+      // scroll function
+      function scrollBottom(){
+        var chatMessages = $(".chatMessages");
+        var height =  chatMessages[0].scrollHeight;
+        chatMessages.scrollTop(height);
+      }
+
+      var roomValue = "#4987720",
+    userId = "1122334",
+    myRoomJson;
+  $(".roomTitle").text("It's BrainStorming");
+  $("#roomNameInput").val("It's BrainStorming");
+  $(".copyLinker2").text(roomValue);
+  $("textarea").keydown(function (e) {
+    // Enter was pressed without shift key
+    if (e.key == "Enter" && !e.shiftKey) {
+      sendT();
+      e.preventDefault();
+    }
+  });
+
+  $("#send").click(sendT);
+
+  function sendT() {
+    if ($(".message").last().data("number") == userId) {
+      //showErrors('tips', 'Tips', 'Press Ctrl + Shift to make a new line!');
+      $(".message .messArea")
+        .last()
+        .append(
+          '<div class="textM ' +
+            userId +
+            ' newMmess">' +
+            $("#message").val() +
+            "</div>"
+        );
+      var goup = setTimeout(function () {
+        $(".message .messArea .textM").last().removeClass("newMmess");
+      }, 10);
+      $("#message").val("");
+      goToBottom();
+      findText();
+    }
+    scrollBottom();
+  }
+
+  document.onload = goToBottom();
+
+  var chatStatus = 1;
+  $(".chatArea").on("scroll", function () {
+    if (
+      $(this).scrollTop() + $(this).innerHeight() <
+      $(this)[0].scrollHeight - $(".message").last().innerHeight()
+    ) {
+      newGoD();
+    }
+  });
+
+  findText();
+
+  function findText() {
+    var message = document.querySelectorAll(".textM"),
+      i;
+    for (i = 0; i < message.length; i++) {
+      message[i].innerHTML = linkify(message[i].textContent);
+    }
+  }
+  var iaeou = 0;
+  $("#settings").click(clickSetTrans);
+  function clickSetTrans() {
+    if (iaeou == 0) {
+      $(".settingsBar").addClass("clickSettingsBar");
+      $(".changeW").addClass("clickSettingsCont");
+      $("#settings").addClass("clickSettings");
+      iaeou = 1;
+    } else {
+      $(".settingsBar").removeClass("clickSettingsBar");
+      $(".changeW").removeClass("clickSettingsCont");
+      $("#settings").removeClass("clickSettings");
+      iaeou = 0;
+    }
+  }
+
+  function linkify(text) {
+    var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+    return text.replace(urlRegex, function (url) {
+      return '<a href="' + url + '" target="blank">' + url + "</a>";
+    });
+  }
+
+  $("#message").on("input", function () {
+    var textarea = document.querySelector("#message");
+    enteredText = textarea.value;
+    numberOfLineBreaks = (enteredText.match(/\n/g) || []).length;
+    characterCount = enteredText.length + numberOfLineBreaks;
+    rowcount = numberOfLineBreaks + 1;
+    if (rowcount < 4) {
+      $("#message").attr("rows", rowcount);
+    }
+  });
+
+  function newGoD() {
+    $("#goToDown").removeClass("downDowny");
+  }
+
+  $("#groupEdit").click(changeTitle);
+  $("#titleFirst").click(changeTitle);
+
+  function changeTitle() {
+    var input = $("#roomNameInput"),
+      regExp = /[a-zA-Z]/g;
+    input.attr("style", "display:block;");
+    input.select();
+    input.focusout(function () {
+      if (input.val().trim().length > 5 && regExp.test(input.val().trim())) {
+        $(".roomTitle").text(input.val());
+        input.attr("style", "display:none;");
+      } else {
+        showErrors(
+          "Invalid Name",
+          "In making your Room Name, you must enter 5 or more LETTERS."
+        );
+        input.val($(".roomTitle")[0].innerHTML);
+        console.log("Room title must be over 5 LETTERS.");
+        input.attr("style", "display:none;");
+      }
+    });
+    input.keydown(function (e) {
+      // Enter was pressed without shift key
+      if (e.key == "Enter" && !e.shiftKey) {
+        if (input.val().trim().length > 5 && regExp.test(input.val().trim())) {
+          $(".roomTitle").text(input.val());
+          input.attr("style", "display:none;");
+          e.preventDefault();
+        } else {
+          input.val($(".roomTitle")[0].innerHTML);
+          showErrors(
+            "error",
+            "Invalid Name",
+            "In making your Room Name, you must enter 5 or more LETTERS."
+          );
+          console.log("Room title must be over 5 LETTERS.");
+          input.attr("style", "display:none;");
+        }
+      }
+    });
+  }
+
+  function showErrors(type, title, details) {
+    if (type == "error") {
+      $(".errorsSide").append(
+        '<div class="bubble" id="errorBubble"><h1 class="erStatus"> <span class="material-icons">error</span>' +
+          title +
+          '</h1><p class="erDetails">' +
+          details +
+          "</p></div>"
+      );
+    }
+    if (type == "tips") {
+      $(".errorsSide").append(
+        '<div class="bubble" id="tipsBubble"><h1 class="erStatus"> <span class="material-icons">tips_and_updates</span>' +
+          title +
+          '</h1><p class="erDetails">' +
+          details +
+          "</p></div>"
+      );
+    }
+    $(".bubble").attr("style", "display:block;");
+
+    var start = setTimeout(function () {
+      $(".bubble").addClass("bubbleAfter");
+    }, 100);
+    var end = setTimeout(function () {
+      $(".bubble").first().removeClass("bubbleAfter");
+      $(".bubble").first().addClass("bubbleGone");
+    }, 5000);
+    var deleteEl = setTimeout(function () {
+      $(".bubble").first().remove();
+    }, 5700);
+  }
+
+  $("#goToDown").click(function () {
+    goToBottom();
+  });
+
+  function goToBottom() {
+    $("#goToDown").addClass("downDowny");
+    $(".chatArea").scrollTop($(".chatArea")[0].scrollHeight);
+  }
+
+  $("#linkCopy").click(function () {
+    var timer = setTimeout(function () {
+      $(".shareLink").addClass("showItem");
+      $(".blackout").addClass("blackShow");
+    }, 120);
+    var timer2 = setTimeout(function () {
+      $(".shareLink").attr("style", "display: block");
+      $(".blackout").attr("style", "display: block");
+    }, 100);
+
+    $(".blackout").click(function () {
+      $(".shareLink").removeClass("showItem");
+      $(".blackout").removeClass("blackShow");
+      var timer2 = setTimeout(function () {
+        $(".shareLink").attr("style", "display: none");
+        $(".blackout").attr("style", "display: none");
+      }, 400);
+    });
+    $("#copyLinker").click(function () {
+      var dummy = document.querySelector("#copyvalue");
+      dummy.select();
+      document.execCommand("copy");
+    });
+  });
+
+
+    </script>
+
+
+
+    </body>
+</html>    
